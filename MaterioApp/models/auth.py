@@ -2,7 +2,12 @@ from typing import Any, Optional
 from django.contrib.auth.models import UserManager, AbstractBaseUser, PermissionsMixin
 from django.db import models
 
-
+def user_type(key):
+    return {
+        "ombor":1,
+        "magazin":3,
+        "derector":1
+    }.get(key,0)
 
 
 
@@ -26,7 +31,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    type = models.SmallIntegerField(default=0)
 
     USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = []
     objects = CustomUserManager()
+    
+    def format(self):
+        return {
+            "name":self.name,
+            "phone":self.phone,
+            "type":self.type
+        }

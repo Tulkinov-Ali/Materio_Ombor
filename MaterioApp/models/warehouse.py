@@ -10,6 +10,15 @@ class WareHose(models.Model):
         return f"{self.name} {self.location}"
     
     
+    def format_workers(self):
+        return{
+            "id":self.id,
+            "name":self.name,
+            "location":self.location,
+            "workers":self.workers
+        }
+    
+    
 class Product(models.Model):
     name = models.CharField(max_length=250)
     size = models.CharField(max_length=50)
@@ -45,4 +54,4 @@ class Korzinka(models.Model):
         self.price_type = self.product.price_type
          
         return super(Korzinka,self).save(*args, **kwargs)
-    
+       
